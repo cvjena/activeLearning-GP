@@ -2,7 +2,7 @@
 initWorkspace
 
 %% are we running octave?
-isOctave = exist('OCTAVE_VERSION') ~= 0;
+b_isOctave = exist('OCTAVE_VERSION') ~= 0;
 
 %%  sample some random histograms
 
@@ -90,7 +90,7 @@ verbose = false;
  for i=1:size(perf_values,1)
     plot( perf_values(i,:), c{i}, 'LineWidth', 2*linewidth, 'MarkerSize',8 );
  end
- if isOctave
+ if b_isOctave
     legend(queryStrategies);
  else
     legend(queryStrategies, 'Location', 'SouthEast','fontSize', 16,'LineWidth', 3);
@@ -124,7 +124,7 @@ verbose = false;
  for i=1:size(optimizedParameters,3)
     plot( optimizedParameters(1,:,i), c{i}, 'LineWidth', 2*linewidth, 'MarkerSize',8 );
  end
- if isOctave
+ if b_isOctave
     legend(queryStrategies);
  else
     legend(queryStrategies, 'Location', 'SouthEast','fontSize', 16,'LineWidth', 3);

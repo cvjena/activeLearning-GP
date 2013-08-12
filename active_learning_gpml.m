@@ -65,6 +65,11 @@ function [perf_values times chosenIndices optimizedParameters]= active_learning_
 % function [perf_values times chosenIndices optimizedParameters] = active_learning_gpml(labeled_X, labeled_y, unlabeled_X, unlabeled_y, test_X, test_y, positive_class, numQueries, settings, queryStrategies, optimizationStep, verbose)
 
 
+  %% are we running octave?
+  b_isOctave = exist('OCTAVE_VERSION') ~= 0;
+
+  %%
+
   % relevant settings
   gpnoise = settings.gpnoise;
   %convert to gpml-scale
@@ -187,7 +192,11 @@ function [perf_values times chosenIndices optimizedParameters]= active_learning_
       ind_unlabeled = initialClassifier.ind_unlabeled;  
 
 
-      timeStamp=tic();
+      if ( b_isOctave )
+        timeStamp=tic();
+      else
+        timeStamp=tic;
+      end
       
       %start actively querying new samples
       if ( numQueries > 0)
@@ -282,9 +291,13 @@ function [perf_values times chosenIndices optimizedParameters]= active_learning_
     %       disp('No queries to take, therefor we are done here.')
       end
          
-      %times(stratIndex)=toc(timeStamp);
-      % OCTAVE compatibility
-      times(stratIndex)=toc(); 
+      if ( b_isOctave )
+        % OCTAVE compatibility
+        times(stratIndex)=toc();           
+      else
+        times(stratIndex)=toc(timeStamp);
+      end      
+
       chosenIndices(:,stratIndex) = ind_labeled;
       
   end %for-loop over query strategies
