@@ -1,6 +1,9 @@
 %% set up workspace and matlab path
 initWorkspace
 
+%% are we running octave?
+isOctave = exist('OCTAVE_VERSION') ~= 0;
+
 %%  sample some random histograms
 
 dim = 5;
@@ -80,13 +83,18 @@ verbose = false;
  %specific color coding for the GCPR-AL paper
  c={'k-', 'b-',   'c-',  'b--',    'g-',     'm-'};
  linewidth=3;
- 
+
+ clf;
  perfPlot=figure(1);
  hold on;
  for i=1:size(perf_values,1)
     plot( perf_values(i,:), c{i}, 'LineWidth', 2*linewidth, 'MarkerSize',8 );
  end
- leg1=legend(queryStrategies, 'Location', 'SouthEast','fontSize', 16,'LineWidth', 3);
+ if isOctave
+    legend(queryStrategies);
+ else
+    legend(queryStrategies, 'Location', 'SouthEast','fontSize', 16,'LineWidth', 3);
+ end
  text_h=findobj(gca,'type','text');  
  set(text_h,'FontSize',14);
  set(gca, 'FontSize', 14);
@@ -116,15 +124,19 @@ verbose = false;
  for i=1:size(optimizedParameters,3)
     plot( optimizedParameters(1,:,i), c{i}, 'LineWidth', 2*linewidth, 'MarkerSize',8 );
  end
- leg3=legend(queryStrategies, 'Location', 'SouthEast','fontSize', 16,'LineWidth', 3);
-  text_h=findobj(gca,'type','text');  
+ if isOctave
+    legend(queryStrategies);
+ else
+    legend(queryStrategies, 'Location', 'SouthEast','fontSize', 16,'LineWidth', 3);
+ end
+ text_h=findobj(gca,'type','text');  
  set(text_h,'FontSize',14);
  set(gca, 'FontSize', 14);
  set(get(gca,'YLabel'), 'FontSize', 14);
  set(get(gca,'XLabel'), 'FontSize', 14);
  title('Parameter development');
  xlabel('Number of queries');
- ylabel('Noise Paramter');
+ ylabel('Noise Parameter');
  hold off;
 
  pause;

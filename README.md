@@ -33,11 +33,17 @@ License.txt
 USAGE
 =====
 
-- getting to know:      - run demo.m, which performs an AL experiment on synthetically created 5D-histograms. Change the settings
-                          in the demo file to figure out how everything works. Don't forget to set up the gpml directory accordingly!
+First download the GPML (see below) and change the gpml path in initWorkspace.m
 
-- run an AL experiment: - Use the function "active_learning_gpml" to run a comparison of different AL-strategies for a given scenario
-                        - Please refer to the documentation in active_learning_gpml.m for explanations of input and output variables.
+- run initWorkspace
+
+- getting to know:      
+(1) run demo.m, which performs an AL experiment on synthetically created 5D-histograms. Change the settings
+in the demo file to figure out how everything works. Don't forget to set up the gpml directory accordingly!
+
+- run an AL experiment: 
+(1) Use the function "active_learning_gpml" to run a comparison of different AL-strategies for a given scenario
+(2) Please refer to the documentation in active_learning_gpml.m for explanations of input and output variables.
 
 
 
@@ -45,6 +51,8 @@ NOTE
 ====
 
 To keep things simple, GP models are computed using the GPML toolbox:
+
+http://mloss.org/revision/download/1206/
 
 @MISC{Rasmussen10:GPML,
   author = {C. E. {Rasmussen} and H. {Nickisch}},

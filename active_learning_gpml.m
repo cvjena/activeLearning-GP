@@ -108,7 +108,9 @@ function [perf_values times chosenIndices optimizedParameters]= active_learning_
 
   
   %training
-  [~, ~, post] = gp(hyp, inf, mean, cov, lik, labeled_X, current_labels);
+  %[~, ~, post] = gp(hyp, inf, mean, cov, lik, labeled_X, current_labels);
+  % for octave compatibility
+  [dummy1, dummy2, post] = gp(hyp, inf, mean, cov, lik, labeled_X, current_labels);
   alpha=post.alpha;
   L = post.L;
   sW = post.sW;
@@ -129,7 +131,6 @@ function [perf_values times chosenIndices optimizedParameters]= active_learning_
   if (verbose)  
     sprintf('score (AuROC): %d',perf_values(1,1))
     disp('first model evaluation')  
-    toc
   end
   
   initialClassifier.L = L;
@@ -186,7 +187,7 @@ function [perf_values times chosenIndices optimizedParameters]= active_learning_
       ind_unlabeled = initialClassifier.ind_unlabeled;  
 
 
-      timeStamp=tic;
+      timeStamp=tic();
       
       %start actively querying new samples
       if ( numQueries > 0)
@@ -221,7 +222,9 @@ function [perf_values times chosenIndices optimizedParameters]= active_learning_
                 optParams(:,floor(i/optimizationStep)+1,stratIndex) = [hyp.cov; hyp.lik];
   
                 %re-train with newly optimized hyperparameters
-                [~, ~, post] = gp(hyp, inf, mean, cov, lik, [labeled_X;unlabeled_X(ind_labeled,:)], current_labels);
+                %[~, ~, post] = gp(hyp, inf, mean, cov, lik, [labeled_X;unlabeled_X(ind_labeled,:)], current_labels);
+                % for octave compatibility
+                [dummy1, dummy2, post] = gp(hyp, inf, mean, cov, lik, [labeled_X;unlabeled_X(ind_labeled,:)], current_labels);
                 alpha=post.alpha;
                 L = post.L;
                 sn2 = exp(2*hyp.lik);    % noise variance of likGauss
@@ -278,8 +281,10 @@ function [perf_values times chosenIndices optimizedParameters]= active_learning_
       else
     %       disp('No queries to take, therefor we are done here.')
       end
-      
-      times(stratIndex)=toc(timeStamp);
+         
+      %times(stratIndex)=toc(timeStamp);
+      % OCTAVE compatibility
+      times(stratIndex)=toc(); 
       chosenIndices(:,stratIndex) = ind_labeled;
       
   end %for-loop over query strategies

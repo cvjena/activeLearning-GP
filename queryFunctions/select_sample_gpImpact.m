@@ -74,5 +74,7 @@ function selected_sample = select_sample_gpImpact(Ks_unlabeled, Kss_unlabeled, L
     % take the one with the largest impact
     % that is, we chose the point which changes the model (weight vector 
     % alpha) most heavily
-    [~, selected_sample]=max(impact);
+    %[~, selected_sample]=max(impact);
+    % OCTAVE compatbility
+    [dummy1, selected_sample]=max(impact);
 end

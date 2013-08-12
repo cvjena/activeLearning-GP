@@ -26,7 +26,11 @@
 % (C) copyright by Alexander Freytag  and Paul Bodesheim and Erik Rodner and Joachim Denzler
 %
 
-function selected_sample = select_sample_gpMean(Ks_unlabeled, ~, ~, alpha, ~)
+% function selected_sample = select_sample_gpMean(Ks_unlabeled, ~, ~, alpha, ~)
+% octave compatibility
+function selected_sample = select_sample_gpMean(Ks_unlabeled, dummy1, dummy2, alpha, dummy3)
     mu = Ks_unlabeled'*alpha;
-    [~, selected_sample] = min(abs(mu));
+    % [~, selected_sample] = min(abs(mu)); 
+    % octave compatibility
+    [dummy4, selected_sample] = min(abs(mu));
 end
